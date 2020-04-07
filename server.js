@@ -12,6 +12,7 @@ const rateLimit = require("express-rate-limit");
 const morgan = require("morgan");
 const xss = require("xss-clean");
 const connectDB = require("./config/connectDB");
+const errorHandler = require("./middleware/error");
 
 // Loading ENV Variables
 dotenv.config({ path: "./config/config.env" });
@@ -22,6 +23,7 @@ connectDB();
 /* 
 Routing Files
 */
+const auth = require("./routes/auth");
 
 const limiter = rateLimit({
   windowMs: 10 * 60 * 1000,
@@ -51,6 +53,8 @@ app.use(express.static(path.join(__dirname, "public")));
 /* 
 Mounting Routes
 */
+app.use("/api/v1/auth", auth);
+app.use(errorHandler);
 
 // Initializing server
 const PORT = process.env.PORT || 5000;
