@@ -24,6 +24,7 @@ connectDB();
 Routing Files
 */
 const auth = require("./routes/auth");
+const profile = require("./routes/profile");
 
 const limiter = rateLimit({
   windowMs: 10 * 60 * 1000,
@@ -54,6 +55,7 @@ app.use(express.static(path.join(__dirname, "public")));
 Mounting Routes
 */
 app.use("/api/v1/auth", auth);
+app.use("/api/v1/auth/profile", profile);
 app.use(errorHandler);
 
 // Initializing server
